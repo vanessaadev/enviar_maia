@@ -2,8 +2,11 @@ const express = require('express');
 const categoryRouter = require('./resources/category/routes')
 const bannerRouter = require('./resources/banner/routes')
 const marcaRouter = require('./resources/marca/routes')
+const cors = require ('cors');
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use(categoryRouter);

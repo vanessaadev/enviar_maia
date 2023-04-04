@@ -42,7 +42,7 @@ app.patch('/banners/:id', async (req, res) => {
     UPDATE tb_banner SET 
         titulo='${req.body.titulo || jaExiste[0].titulo}',
         descricao='${req.body.descricao || jaExiste[0].descricao}',
-        imagem='${req.params.id || jaExiste[0].imagem}'
+        imagem='${req.body.imagem || jaExiste[0].imagem}'
     WHERE id='${req.params.id}'    
     `);
     dados.id = req.params.id;

@@ -51,5 +51,10 @@ app.patch("/marca/:id",  (req, res) => {
     res.send('ok');
 })
 
+app.delete("/marca/:id",  (req, res) => {
+    res.send('ok');
+})
+
+
 
 module.exports = app;
