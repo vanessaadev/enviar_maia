@@ -51,8 +51,10 @@ app.patch("/marca/:id",  (req, res) => {
     res.send('ok');
 })
 
-app.delete("/marca/:id",  (req, res) => {
-    res.send('ok');
+app.delete("/marca/:id", async  (req, res) => {
+    await database.execute(`DELETE FROM tb_marca WHERE id='${req.params.id}'`)
+
+    res.sendStatus(204);
 })
 
 
