@@ -1,4 +1,4 @@
-const app = require("express.Router");
+const app = require("express").Router();
 const database = require("../../connection/database");
 
 app.get("/users", async (req, res) => {
@@ -20,5 +20,7 @@ app.post("/users", async (req, res) => {
         UPDATE tb_users SET token = '${req.body.senha}'_${response.insertId}';
     `);
 });
+
+
 
 module.exports = app;
