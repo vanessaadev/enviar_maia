@@ -2,14 +2,14 @@ const app = require('express').Router();
 const database = require('../../connection/database');
 
 app.get('/usuario', async (req, res) => {
-    let dados = await database.execute(`SELECT * FROM tb_informacoes_pessoais`);
+    let dados = await database.execute(`SELECT * FROM tb_usuario`);
 
     res.send(dados);
 });
 
 app.get('/usuario/:id', async (req, res) => {
     let dados = await database.execute(`
-        SELECT * FROM tb_informacoes_pessoais WHERE id='${req.params.id}'
+        SELECT * FROM tb_usuario WHERE id='${req.params.id}'
     `);
 
     res.send(dados[0]);
