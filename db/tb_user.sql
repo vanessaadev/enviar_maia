@@ -4,3 +4,5 @@ CREATE TABLE tb_user (
     senha VARCHAR(50),
     token VARCHAR(50) NULL
 );
+
+ALTER TABLE tb_users MODIFY COLUMN senha VARCHAR(255);

@@ -1,5 +1,6 @@
 const app = require("express").Router();
 const database = require("../../connection/database");
+const argon2 = require('argon2');
 
 app.get("/users", async (req, res) => {
     let lista = await database.execute(`
@@ -9,11 +10,13 @@ app.get("/users", async (req, res) => {
 });
 
 app.post("/users", async (req, res) => {
+    let senhaCriptografada = await argon2.hash(req.body.senha);
+    
     let response = await database.execute(`
         INSERT INTO tb_users 
         (nome, email, senha, token)
         VALUES
-        ('${req.body.nome}','${req.body.email}','${req.body.senha}', '');
+        ('${req.body.nome}','${req.body.email}','${senhaCriptografada}', '');
     `);
 
     await database.execute(`
@@ -29,15 +32,22 @@ app.post("/users", async (req, res) => {
 app.get("/users/auth", async(req, res) => {
     let users = await database.execute(`
         SELECT * FROM tb_users 
-        WHERE email = '${req.headers.email}' AND senha = '${req.headers.senha}';
+        WHERE email = '${req.headers.email}';
     `);
-
-    if(users.length === 0){
-        res.send(JSON.stringify({"message": "Usuario ou senha invalido"}))
+   
+    //se nao for encontrado ngm com este email o usuario n existe
+    if (undefined === users[0]) {
+        res.sendStatus(400).send({erro: 'Email invalido'});
         return;
     }
 
-    res.send(JSON.stringify({"token": users[0].token}));
+    let senhaVerificada = await argon2.verify(users[0].senha, req.headers.senha);
+
+    if (false === senhaVerificada) {
+        res.status(400).send({erro: 'Senha Incorreta'});
+    }
+
+    res.send(users[0]);
 });
 
 module.exports = app;
