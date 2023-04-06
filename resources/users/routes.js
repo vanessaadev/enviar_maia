@@ -11,19 +11,19 @@ app.get("/users", async (req, res) => {
 app.post("/users", async (req, res) => {
     let response = await database.execute(`
         INSERT INTO tb_users 
-        (nome, email, senha)
+        (nome, email, senha, token)
         VALUES
-        ('${req.body.nome}','${req.body.email}','${req.body.senha}');
+        ('${req.body.nome}','${req.body.email}','${req.body.senha}', '');
     `);
 
     await database.execute(`
         UPDATE tb_users 
-        SET token = '${req.body.senha}_${response.insertId}';
+        SET token = '${req.body.senha}_${response.insertId}'
         WHERE id = ${response.insertId};
     `);
     let dados = req.body;
     dados.id = response.insertId;
-    res.send(JSON.stringfy(dados));
+    res.send(dados);
 });
 
 app.get("/users/auth", async(req, res) => {
