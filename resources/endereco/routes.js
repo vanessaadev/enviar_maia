@@ -1,4 +1,4 @@
-enderecoconst app = require('express').Router();
+const app = require('express').Router();
 const database = require('../../connection/database');
 
 app.get('/endereco', async (req, res) => {
@@ -28,7 +28,7 @@ app.post('/endereco/:id', async (req, res) => {
     res.send(corpo);
 });
 
-app.patch('/informacoes_entrega/:id', async (req, res) => {
+app.patch('/endereco/:id', async (req, res) => {
     let dados = req.body;
 
     let jaExiste = await database.execute(`
