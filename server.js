@@ -6,7 +6,8 @@ const userRoutes = require('./resources/users/routes');
 const colecoesRoutes = require('./resources/colecoesDestaque/routes');
 const clienteRoutes = require('./resources/cliente/routes');
 const enderecoRoutes = require('./resources/endereco/routes');
-const produtoRoutes = require('./resources/produto/routes')
+const produtoRoutes = require('./resources/produto/routes');
+const pedidoRoutes = require('./resources/meuPedido/routes');
 const swagger = require('swagger-ui-express');
 const docs = require('./docs.json');
 
@@ -28,6 +29,7 @@ app.use(colecoesRoutes);
 app.use(clienteRoutes);
 app.use(enderecoRoutes);
 app.use(produtoRoutes);
+app.use(pedidoRoutes);
 
 app.listen(8000, () => {
     console.log('------------');
